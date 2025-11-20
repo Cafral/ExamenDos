@@ -24,7 +24,7 @@ export default function Home() {
         const json = await uriPlanetas.json();
 
         //Ordenar de a - z
-        const ordenado = json.sort((a, b) => (a.pl_name || '').localeCompare(b.pl_name || ''));
+        const ordenado = json.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
 
         setPlanets(ordenado)
         //Carga completa
@@ -44,11 +44,7 @@ export default function Home() {
     }
     return (
         <View style={styles.container}>
-            <Image
-                source={{ uri: 'https://www.nasa.gov/wp-content/uploads/2023/01/pia21421.jpg' }}
-                style={styles.headerImage}
-            />
-
+            
             <Text style={styles.title}>Planetas NASA</Text>
 
             <ScrollView
@@ -59,11 +55,16 @@ export default function Home() {
                     <Text style={styles.loading}>Cargando planetas...</Text>
                 ) : (
                     planets.map((p, index) => (
-                        <View key={index} style={styles.card}>
-                            <Text style={styles.name}>{p.pl_name}</Text>
-                            <Text style={styles.info}>Nombre: {p.name}</Text>
-                            <Text style={styles.info}>Distancia: {p.distance_light_year} años luz</Text>
-                            <Text style={styles.info}>Temperatura: {p.temperature}</Text>
+                        <View key={p.name ?? index} style={styles.card}>
+                            <Text style={styles.name}>{p.name}</Text>
+                            <Text style={styles.info}>Masa (Júpiter): {p.mass ?? 'N/A'}</Text>
+                            <Text style={styles.info}>Radio (Júpiter): {p.radius ?? 'N/A'}</Text>
+                            <Text style={styles.info}>Período (días): {p.period ?? 'N/A'}</Text>
+                            <Text style={styles.info}>Semi eje mayor (AU): {p.semi_major_axis ?? 'N/A'}</Text>
+                            <Text style={styles.info}>Temperatura: {p.temperature ?? 'N/A'}</Text>
+                            <Text style={styles.info}>Distancia (ly): {p.distance_light_year ?? 'N/A'}</Text>
+                            <Text style={styles.info}>Masa estrella: {p.host_star_mass ?? 'N/A'}</Text>
+                            <Text style={styles.info}>Temp. estrella: {p.host_star_temperature ?? 'N/A'}</Text>
                         </View>
                     ))
                 )}
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         marginTop: 12,
         marginBottom: 8,
+        textAlign: 'center'
     },
     scrollContent: {
         paddingBottom: 20,

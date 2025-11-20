@@ -1,0 +1,5 @@
+NOMBRE = franco
+APELLIDO = cachago
+CONTRASEÑA = 12
+
+Le implemente las variables para que llame correctamente al api, caso contrario anteriormente no funcionaba
